@@ -1,6 +1,6 @@
 # web_data_app.py
 # June 2025
-# Modified by: STUDENT NAME
+# Modified by: JACK SHENFIELD
 #
 # An simple program for demonstrating web applications using Flask and web scraping of data using Beautiful Soup.
 # Detailed specifications are provided via the Assignment 5 README file.
@@ -74,14 +74,16 @@ def book_data():
 
     titles = []
     prices = []
+    pricesreduc = []
 
     # For each book listed on the page, get the title and the price from inside in the html data
     for book in book_results:
         titles.append(book.h3.a.get('title'))
         prices.append(float(book.find('p', class_="price_color").text[1:]))
+        pricesreduc.append(0.75*float(book.find('p', class_="price_color").text[1:]))
 
     # Create a DataFrame using the two lists
-    book_data = pd.DataFrame(list(zip(titles, prices)), columns=['Titles','Prices'])    
+    book_data = pd.DataFrame(list(zip(titles, prices, pricesreduc)), columns=['Titles','Prices','Prices25%Reduc'])    
     print(book_data)        # Print to the terminal as confirmation - only we can see this
 
     # Format and print the DataFrame using the html template provided in the templates subdirectory
@@ -89,6 +91,7 @@ def book_data():
 
 @app.route("/learn")
 def learn():
+
     # Return a string the describes one thing you learned in ENSF 692.
-    pass
+    return "One thing I learned how to do in ENSF 692 was how to use Flask!"
 
